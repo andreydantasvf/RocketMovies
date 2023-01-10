@@ -5,15 +5,13 @@ import { Container, Form, Avatar } from "./styles";
 
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { BackButton } from "../../components/BackButton";
 
 export function Profile() {
     return (
         <Container>
             <header>
-                <Link to="/">
-                    <FiArrowLeft />
-                    Voltar
-                </Link>
+                <BackButton />
             </header>
 
             <Form>

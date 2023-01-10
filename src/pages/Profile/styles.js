@@ -13,21 +13,6 @@ export const Container = styled.div`
         align-items: center;
 
         padding: 0 124px;
-
-        a {
-            color: ${({ theme }) => theme.COLORS.PINK};
-            font-size: 16px;
-
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        svg {
-            font-size: 24px;
-            color: ${({ theme }) => theme.COLORS.PINK};
-
-        }
     }
 `;
 
