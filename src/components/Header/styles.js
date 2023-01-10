@@ -28,6 +28,7 @@ export const Profile = styled.div`
 
     display: flex;
     align-items: center;
+    justify-content: end;
     gap: 9px;
 
     > div {
