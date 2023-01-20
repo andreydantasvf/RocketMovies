@@ -41,9 +41,12 @@ export const Profile = styled.div`
             color: ${({ theme }) => theme.COLORS.WHITE};
         }
 
-        span {
+        button {
             font-size: 14px;
-            text-align: right;
+            align-self: flex-end;
+            background: none;
+            border: none;
+            width: fit-content;
             color: ${({ theme }) => theme.COLORS.GRAY_100};
         }
     }
