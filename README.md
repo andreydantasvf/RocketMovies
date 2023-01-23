@@ -1,9 +1,9 @@
 
 <h1 align="center">RocketMovies</h1>
 
-## 🔖Layout
+## 🔖Preview
 <p >
-	  <img alt="Layout" src="https://raw.githubusercontent.com/andreydantasvf/RocketMovies/main/src/assets/layout.png" widht="400px" height="400px">
+	  <img alt="Layout" src="./github/preview.png" widht="700px" height="400px">
 	</p>
  
   
@@ -20,6 +20,13 @@ Aplicação para salvar seus filmes favoritos com sua descição, tags e nota de
 - Styled Components
 - Material Ui
 - ViteJs
+- Nodejs
+- Express
+- SQLite
+- Knex
+- Bcrypt
+- JsonWebToken
+- Multer
 
 ## 💻 Iniciando o Projeto
 
@@ -32,9 +39,17 @@ Aplicação para salvar seus filmes favoritos com sua descição, tags e nota de
 $ git clone https://github.com/andreydantasvf/RocketMovies && cd RocketMovies 
 ```
 
-**Rode os seguintes comandos em seu terminal:**
+**Para iniciar o server da aplicação:**
 ```bash
-$ npm install
+$ cd server && npm install
+```
+```bash
+$ npm run dev
+```
+
+**Para iniciar a aplicação web:**
+```bash
+$ cd web && npm install
 ```
 ```bash
 $ npm run dev
