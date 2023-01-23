@@ -7,6 +7,8 @@ export const Container = styled.div`
     border-radius: 10px;
     background-color: ${({ theme }) => theme.COLORS.BACKGROUND_700};
 
+    cursor: pointer;
+
     > h3 {
         flex: 1;
         text-align: left;

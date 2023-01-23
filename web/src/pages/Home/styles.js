@@ -33,13 +33,13 @@ export const NewMovie = styled.div`
         justify-content: center;
         gap: 8px;
 
-        background-color: ${({theme}) => theme.COLORS.PINK};
+        background-color: ${({ theme }) => theme.COLORS.PINK};
         border: none;
         border-radius: 8px;
 
         font-weight: 400;
         font-size: 16px;
-        color: ${({theme}) => theme.COLORS.BACKGROUND_900};
+        color: ${({ theme }) => theme.COLORS.BACKGROUND_900};
 
         svg {
             font-size: 24px;

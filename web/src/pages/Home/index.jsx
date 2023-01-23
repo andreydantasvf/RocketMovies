@@ -1,12 +1,32 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { FiPlus } from 'react-icons/fi'
 
 import { Container, NewMovie, Content } from "./styles";
+
+import { api } from "../../services/api";
 
 import { Header } from "../../components/Header";
 import { Movie } from "../../components/Movie";
 
 export function Home() {
+    const [movies, setMovies] = useState([]);
+
+    const navigate = useNavigate();
+
+    function handleDetails(id) {
+        navigate(`/details/${id}`)
+    }
+
+    useEffect(() => {
+        async function fetchMovies() {
+            const response = await api.get(`/movie?title=&tags=`);
+            setMovies(response.data);
+        }
+
+        fetchMovies();
+    }, []);
+
     return (
         <Container>
             <Header></Header>
@@ -20,38 +40,15 @@ export function Home() {
             </NewMovie>
 
             <Content>
-                <Movie data={{
-                    title: 'Spider-Man',
-                    description: 'Pragas nas colheitas fizeram a civilização humana regredir para uma sociedade agrária em futuro de data desconhecida. Cooper, ex-piloto da NASA, tem uma fazenda com sua família. Murphy, a filha de dez anos de Cooper, acredita que seu quarto está assombrado por um fantasma que tenta se',
-                    rating: 4,
-                    tags: [
-                        { id: '1', name: 'Ficção cientifica' },
-                        { id: '2', name: 'Drama' },
-                        { id: '3', name: 'Familia' }
-                    ]
-                }} />
-
-                <Movie data={{
-                    title: 'Spider-Man',
-                    description: 'Pragas nas colheitas fizeram a civilização humana regredir para uma sociedade agrária em futuro de data desconhecida. Cooper, ex-piloto da NASA, tem uma fazenda com sua família. Murphy, a filha de dez anos de Cooper, acredita que seu quarto está assombrado por um fantasma que tenta se',
-                    rating: 4,
-                    tags: [
-                        { id: '1', name: 'Ficção cientifica' },
-                        { id: '2', name: 'Drama' },
-                        { id: '3', name: 'Familia' }
-                    ]
-                }} />
-
-                <Movie data={{
-                    title: 'Spider-Man',
-                    description: 'Pragas nas colheitas fizeram a civilização humana regredir para uma sociedade agrária em futuro de data desconhecida. Cooper, ex-piloto da NASA, tem uma fazenda com sua família. Murphy, a filha de dez anos de Cooper, acredita que seu quarto está assombrado por um fantasma que tenta se',
-                    rating: 4,
-                    tags: [
-                        { id: '1', name: 'Ficção cientifica' },
-                        { id: '2', name: 'Drama' },
-                        { id: '3', name: 'Familia' }
-                    ]
-                }} />
+                {
+                    movies.map(movie => (
+                        <Movie
+                            key={String(movie.id)}
+                            data={movie}
+                            onClick={() => handleDetails(movie.id)}
+                        />
+                    ))
+                }
             </Content>
         </Container>
     )
