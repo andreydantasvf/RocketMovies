@@ -65,7 +65,7 @@ export function SignUp() {
 
                 <Button title="Entrar" onClick={handleSignUp} />
 
-                <Link to="/register">
+                <Link to="/">
                     <FiArrowLeft size={24} />
                     Voltar para o login
                 </Link>
