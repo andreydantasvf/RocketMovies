@@ -8,9 +8,11 @@ import { api } from "../../services/api";
 
 import { Header } from "../../components/Header";
 import { Movie } from "../../components/Movie";
+import { Input } from "../../components/Input";
 
 export function Home() {
     const [movies, setMovies] = useState([]);
+    const [search, setSearch] = useState("");
 
     const navigate = useNavigate();
 
@@ -20,16 +22,21 @@ export function Home() {
 
     useEffect(() => {
         async function fetchMovies() {
-            const response = await api.get(`/movie?title=&tags=`);
+            const response = await api.get(`/movie?title=${search}&tags=`);
             setMovies(response.data);
         }
 
         fetchMovies();
-    }, []);
+    }, [search]);
 
     return (
         <Container>
-            <Header></Header>
+            <Header>
+                <Input
+                    placeholder="Pesquisar pelo título"
+                    onChange={e => setSearch(e.target.value)}
+                />
+            </Header>
 
             <NewMovie>
                 <h2>Meus filmes</h2>

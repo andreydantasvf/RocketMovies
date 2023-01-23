@@ -8,7 +8,7 @@ import avatarPlaceholder from "../../assets/avatar_placeholder.svg";
 
 import { Input } from '../Input';
 
-export function Header() {
+export function Header({ children }) {
     const { signOut, user } = useAuth();
 
     const navigation = useNavigate();
@@ -24,7 +24,7 @@ export function Header() {
         <Container>
             <h2>RocketMovies</h2>
 
-            <Input placeholder="Pesquisar pelo título" />
+            {children}
 
             <Profile>
                 <div>
@@ -33,7 +33,7 @@ export function Header() {
                 </div>
 
                 <Link to="/profile">
-                        <img src={avatarUrl} alt={`Foto de ${user.name}`} />
+                    <img src={avatarUrl} alt={`Foto de ${user.name}`} />
                 </Link>
             </Profile>
         </Container>
