@@ -1,4 +1,12 @@
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { BiTimeFive } from "react-icons/bi"
+
+import { api } from "../../services/api";
+import { useAuth } from "../../hooks/auth";
+
+import avatarPlaceholder from "../../assets/avatar_placeholder.svg";
+
 import { Container, Buttons, Title, Information, Date, Tags, Description } from "./styles";
 
 import { Header } from "../../components/Header";
@@ -7,40 +15,76 @@ import { RatingMovie } from "../../components/RatingMovie";
 import { Tag } from "../../components/Tag";
 
 export function Details() {
+    const [data, setData] = useState(null);
+
+    const { user } = useAuth();
+    const avatarUrl = user.avatar ? `${api.defaults.baseURL}/files/${user.avatar}` : avatarPlaceholder;
+
+    const params = useParams();
+    const navigate = useNavigate();
+
+    async function handleDeleteMovie() {
+        const confirm = window.confirm("Deseja realmente remover este filme?");
+
+        if (confirm) {
+            await api.delete(`/movie/${params.id}`);
+            navigate(-1);
+        }
+    }
+
+    useEffect(() => {
+        async function fetchMovie() {
+            const response = await api.get(`/movie/${params.id}`);
+            setData(response.data);
+        }
+
+        fetchMovie();
+    }, []);
     return (
         <Container>
             <Header />
 
-            <main>
+            {
+                data &&
+                <main>
                     <Buttons>
                         <BackButton />
-                        <button>Remover filme</button>
+                        <button onClick={handleDeleteMovie}>Remover filme</button>
                     </Buttons>
 
                     <Title>
-                        <h2>Spider-Man</h2>
-                        <RatingMovie rating={4} />
+                        <h2>{data.title}</h2>
+                        <RatingMovie rating={data.rating} />
                     </Title>
 
                     <Information>
-                        <img src="https://github.com/andreydantasvf.png" alt="Foto do usuário" />
-                        Por Andrey Dantas
+                        <img src={avatarUrl} alt={`Foto de ${user.name}`} />
+                        Por {user.name}
                         <Date>
                             <BiTimeFive />
                             23/05/22 às 08:00
                         </Date>
                     </Information>
 
-                    <Tags>
-                        <Tag title="Ficção Cientifica" />
-                        <Tag title="Drama" />
-                        <Tag title="Familia" />
-                    </Tags>
+                    {
+                        data.tags &&
+                        <Tags>
+                            {
+                                data.tags.map(tag => (
+                                    <Tag
+                                        key={String(tag.id)}
+                                        title={tag.name}
+                                    />
+                                ))
+                            }
+                        </Tags>
+                    }
 
                     <Description>
-                        Pragas nas colheitas fizeram a civilização humana regredir para uma sociedade agrária em futuro de data desconhecida. Cooper, ex-piloto da NASA, tem uma fazenda com sua família. Murphy, a filha de dez anos de Cooper, acredita que seu quarto está assombrado por um fantasma que tenta se comunicar com ela. Pai e filha descobrem que o "fantasma" é uma inteligência desconhecida que está enviando mensagens codificadas através de radiação gravitacional, deixando coordenadas em binário que os levam até uma instalação secreta da NASA liderada pelo professor John Brand. O cientista revela que um buraco de minhoca foi aberto perto de Saturno e que ele leva a planetas que podem oferecer condições de sobrevivência para a espécie humana. As "missões Lázaro" enviadas anos antes identificaram três planetas potencialmente habitáveis orbitando o buraco negro Gargântua: Miller, Edmunds e Mann – nomeados em homenagem aos astronautas que os pesquisaram. Brand recruta Cooper para pilotar a nave espacial Endurance e recuperar os dados dos astronautas; se um dos planetas se mostrar habitável, a humanidade irá seguir para ele na instalação da NASA, que é na realidade uma enorme estação espacial. A partida de Cooper devasta Murphy. Além de Cooper, a tripulação da Endurance é formada pela bióloga Amelia, filha de Brand; o cientista Romilly, o físico planetário Doyle, além dos robôs TARS e CASE. Eles entram no buraco de minhoca e se dirigem a Miller, porém descobrem que o planeta possui enorme dilatação gravitacional temporal por estar tão perto de Gargântua: cada hora na superfície equivale a sete anos na Terra. Eles entram em Miller e descobrem que é inóspito já que é coberto por um oceano raso e agitado por ondas enormes. Uma onda atinge a tripulação enquanto Amelia tenta recuperar os dados de Miller, matando Doyle e atrasando a partida. Ao voltarem para a Endurance, Cooper e Amelia descobrem que 23 anos se passaram.
+                        {data.description}
                     </Description>
-            </main>
+                </main>
+            }
         </Container>
     )
 }
