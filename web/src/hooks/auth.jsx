@@ -64,10 +64,10 @@ function AuthProvider({ children }) {
     const user = localStorage.getItem("@rocketmovies:user");
 
     if (token && user) {
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      api.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(token)}`;
 
       setData({
-        token,
+        token: JSON.parse(token),
         user: JSON.parse(user)
       });
     }
